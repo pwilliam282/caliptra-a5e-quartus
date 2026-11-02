@@ -43,8 +43,12 @@ Caliptra registers through the window (base 0x0004_0000 + offset):
 1. magic=1 → pwrgood → release `cptra_rst_b`
 2. poll `status_pio.ready_for_fuses` (timeout → magic 0xDEAD0001)
 3. magic=2; read `CPTRA_HW_REV_ID` and `CPTRA_FLOW_STATUS` over APB, print on JTAG UART
-4. magic=**0xCA11F00D** if HW_REV_ID is sane (led=0x0D), else 0xDEAD0002.
-Fuse programming / FW load (`CPTRA_FUSE_WR_DONE`, mailbox `FIRMWARE_LOAD`) is the next step.
+4. magic=3: program + lock `CPTRA_MBOX_VALID_PAUSER[0]`=1 (our bridge PAUSER; default 0xFFFFFFFF would PSLVERR the mailbox)
+5. magic=4: TEST fuse load (one UDS word) + `CPTRA_FUSE_WR_DONE`=1 (fail 0xDEAD0003)
+6. acquire `MBOX_LOCK`, check `MBOX_USER`=1 (fail 0xDEAD0004); fatal/non-fatal error check (fail 0xDEAD0005)
+7. magic=**0xCA11F00D** on success (led=0x0D). Same sequence as `../sim/tb_boot_apb.sv` (passes in Verilator).
+Mailbox `FIRMWARE_LOAD` needs the caliptra-sw 1.x ROM in the build (next step).
+Note: after editing main.c, rerun `sw/build_app.sh` (with elf2hex) so `onchip_mem.hex` matches before synthesis.
 
 ## Rebuild
 All Quartus/PD commands run inside Docker via `./dock.sh '<cmd>'` (needs `--net=host` + license
