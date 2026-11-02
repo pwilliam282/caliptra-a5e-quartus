@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<internal_error>
+	<sub_system>ERR</sub_system>
+	<callstack>	0x7f31317ee7e1: ccl_err + 0x327e1 (_ZN22ERR_UNWINDER_BACKTRACE15get_stack_traceEPPKviiPv + 0xed)
+	0x7f3136f107b0: ccl_msg + 0x8f7b0 (_Z21msg_ie_get_call_stackPv + 0xc4)
+	0x7f3136f12b16: ccl_msg + 0x91b16 (_ZN18MSG_INTERNAL_ERROR12report_fatalEPKcPvb + 0x40)
+	0x7f31317ce3c7: ccl_err + 0x123c7 (_Z26err_report_fatal_exceptionPKcPvb + 0x63)
+	0x7f31317e0f40: ccl_err + 0x24f40 (err_sigaction_handler + 0x727)
+	0x7f3131bbd330: c + 0x45330
+	0x7f3131ba09a2: c + 0x289a2 (abort + 0x182)
+	0x7f3135eff55a: Qt6Core + 0xae55a (_ZN9QtPrivate17lcNativeInterfaceEv.cold + 0)
+	0x7f3135effdc4: Qt6Core + 0xaedc4 (_ZNK14QMessageLogger7warningEPKcz + 0)
+	0x7f31356aedc2: Qt6Gui + 0xf9dc2 (_ZN15QGuiApplication21restoreOverrideCursorEv.cold + 0)
+	0x7f31357435a1: Qt6Gui + 0x18e5a1 (_ZN22QGuiApplicationPrivate25createPlatformIntegrationEv + 0x641)
+	0x7f3135743f00: Qt6Gui + 0x18ef00 (_ZN22QGuiApplicationPrivate21createEventDispatcherEv + 0x30)
+	0x7f3135f971f5: Qt6Core + 0x1461f5 (_ZN23QCoreApplicationPrivate4initEv + 0xbe5)
+	0x7f31357471b3: Qt6Gui + 0x1921b3 (_ZN22QGuiApplicationPrivate4initEv + 0x33)
+	0x7f3134fa8c59: Qt6Widgets + 0x18bc59 (_ZN19QApplicationPrivate4initEv + 0x9)
+	0x7f3137af1947: gcl_afcq + 0xe0947 (_ZN8AFCQ_APPC2ERiPPc + 0x25)
+	0x7f31372fecf4: sys_qui + 0x8bcf4 (_ZN7QUI_APPC2ERiPPc + 0x28)
+	0x7f31375541a0: sys_qgq + 0x131a0 (_ZN7QGQ_APPC1ERiPPc + 0xe)
+	   0x4025be: quartus + 0x4025be (_Z8qgq_mainiPPKc + 0x48)
+	   0x4026d7: quartus + 0x4026d7 (_Z16qgq_py_wrap_mainiPPKc + 0x1a)
+	0x7f3136ec602c: ccl_msg + 0x4502c (_Z15msg_main_threadPv + 0x10)
+	0x7f3136ec7ad9: ccl_msg + 0x46ad9 (_Z18msg_thread_wrapperPFPvS_ES_ + 0x8c)
+	0x7f313700048d: ccl_mem + 0x2148d (_Z18mem_thread_wrapperPFPvS_ES_ + 0x9d)
+	0x7f31317ca588: ccl_err + 0xe588 (_Z18err_thread_wrapperPFPvS_ES_ + 0x1e)
+	0x7f3136ec6826: ccl_msg + 0x45826 (_Z12msg_exe_mainiPPKcPFiiS1_E + 0xc2)
+	   0x40270d: quartus + 0x40270d (main + 0x26)
+	0x7f3131ba21ca: c + 0x2a1ca
+	0x7f3131ba228b: c + 0x2a28b (__libc_start_main + 0x8b)
+	   0x4024ca: quartus + 0x4024ca (_start + 0x2a)
+</callstack>
+	<error>*** Fatal Error: Segment Violation: faulting address=(nil), PC=0x7f3131ba09a2 : 0x7f3131ba09a2: c!abort + 0x182</error>
+	<date>Mon Nov  2 02:24:50 2026
+</date>
+	<version>Version 25.3.0 Build 109 09/24/2025 SC Pro Edition</version>
+</internal_error>

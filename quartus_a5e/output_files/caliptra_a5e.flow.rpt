@@ -1,0 +1,134 @@
+Flow report for caliptra_a5e
+Mon Nov  2 02:57:48 2026
+Quartus Prime Version 25.3.0 Build 109 09/24/2025 SC Pro Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Flow Summary
+  2. Flow Settings
+  3. Flow Non-Default Global Settings
+  4. Flow Elapsed Time
+  5. Flow OS Summary
+  6. Flow Log
+  7. Legal Notice
+
+
+
++-----------------------------------------------------+
+; Flow Summary                                        ;
++-------------+---------------------------------------+
+; Flow Status ; Successful - Mon Nov  2 02:57:48 2026 ;
++-------------+---------------------------------------+
+
+
++-----------------------------------------+
+; Flow Settings                           ;
++-------------------+---------------------+
+; Option            ; Setting             ;
++-------------------+---------------------+
+; Start date & time ; 11/02/2026 02:51:20 ;
+; Main task         ; Compilation         ;
+; Revision Name     ; caliptra_a5e        ;
++-------------------+---------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                              ;
++--------------------------+-------------------------------------------------------------------------+---------------+-------------+------------+
+; Assignment Name          ; Value                                                                   ; Default Value ; Entity Name ; Section Id ;
++--------------------------+-------------------------------------------------------------------------+---------------+-------------+------------+
+; COMPILER_SIGNATURE_ID    ; 143122138774736.179358788000008                                         ; --            ; --          ; --         ;
+; PROJECT_OUTPUT_DIRECTORY ; /workspace/caliptra-c10gx-1x/quartus_a5e/output_files                   ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/keyvault/rtl              ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/doe/rtl                   ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/integration/asserts       ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/integration/rtl           ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/libs/rtl                  ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/caliptra_prim/rtl         ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/lc_ctrl/rtl               ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/spi_host/rtl              ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/spi_host/tb               ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/pcrvault/rtl              ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/datavault/rtl             ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/soc_ifc/rtl               ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/riscv_core/veer_el2/rtl   ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/entropy_src/rtl           ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/entropy_src/tb            ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/csrng/rtl                 ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/uart/rtl                  ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/sha512/coverage           ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/sha256/coverage           ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/hmac/coverage             ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/ecc/coverage              ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/soc_ifc/coverage          ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/pcrvault/coverage         ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/keyvault/coverage         ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/integration/tb            ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/integration/coverage      ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/caliptra_prim_generic/rtl ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/ahb_lite_bus/rtl          ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/sha512/rtl                ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/sha256/rtl                ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/sha512_masked/rtl         ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/hmac/rtl                  ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/hmac_drbg/rtl             ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/ecc/rtl                   ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/kmac/rtl                  ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/edn/rtl                   ; --            ; --          ; --         ;
+; SEARCH_PATH              ; /workspace/caliptra-c10gx-1x/caliptra-rtl/src/aes/rtl                   ; --            ; --          ; --         ;
+; TOP_LEVEL_ENTITY         ; caliptra_passive_top                                                    ; caliptra_a5e  ; --          ; --         ;
+; VERILOG_CU_MODE          ; MFCU                                                                    ; SFCU          ; --          ; --         ;
+; VERILOG_INPUT_VERSION    ; SystemVerilog_2005                                                      ; Verilog_2001  ; --          ; --         ;
+; VERILOG_MACRO            ; SYNTHESIS=1                                                             ; --            ; --          ; --         ;
+; VERILOG_MACRO            ; FPGA_SYN=1                                                              ; --            ; --          ; --         ;
++--------------------------+-------------------------------------------------------------------------+---------------+-------------+------------+
+
+
++--------------------------------------------------+
+; Flow Elapsed Time                                ;
++-------------+--------------+---------------------+
+; Module Name ; Elapsed Time ; Peak Virtual Memory ;
++-------------+--------------+---------------------+
+; Synthesis   ; 00:06:30     ; 3636 MB             ;
+; Total       ; 00:06:30     ; --                  ;
++-------------+--------------+---------------------+
+
+
++-----------------------------------------------------------------------------+
+; Flow OS Summary                                                             ;
++-------------+-----------------------+---------+------------+----------------+
+; Module Name ; Machine Hostname      ; OS Name ; OS Version ; Processor type ;
++-------------+-----------------------+---------+------------+----------------+
+; Synthesis   ; grok-bot-vm-358808298 ; Ubuntu  ; 24         ; x86_64         ;
++-------------+-----------------------+---------+------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_syn --parallel=8 caliptra_a5e
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+

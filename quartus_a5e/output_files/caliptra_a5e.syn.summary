@@ -1,0 +1,9 @@
+Synthesis Status : Successful - Mon Nov  2 02:57:42 2026
+Revision Name : caliptra_a5e
+Top-level Entity Name : caliptra_passive_top
+Family : Agilex 5
+Quartus Prime Version : 25.3.0 Build 109 09/24/2025 SC Pro Edition
+Device : A5EC065BB32AE6S
+Logic utilization estimate (in ALMs) : 141,256 / 222,400 ( 64 % )
+Total dedicated logic registers : 142373
+Estimated DSP Blocks Post-Merging : 47
