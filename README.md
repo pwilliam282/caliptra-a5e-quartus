@@ -3,6 +3,10 @@
 Passive Caliptra 1.x (v1.1) Quartus Prime Pro 25.3 project targeting **A5EC065BB32AE6S**.
 
 ## Contents
+- `quartus_a5e/` — Caliptra-only A5E synth study (QSF/QPF, reports)
+- `quartus_a5e_nios/` — **Nios V/m host + Avalon→APB + Caliptra 1.x** (synth ~62% ALMs)
+- `STUDY.md` — C10 GX + A5E fit notes
+
 - `quartus_a5e/` — QSF/QPF, SDC, `run_a5e_docker.sh`, `flow.log`, synthesis reports under `output_files/`
 - `STUDY.md` — C10 GX + A5E fit study notes
 
@@ -19,3 +23,8 @@ cd quartus_a5e
 # set LM_LICENSE_FILE to your SW-AGILEX-5E.dat
 ./run_a5e_docker.sh   # alterafpga/quartuspro-v25.3:agilex5, --net=host
 ```
+
+## Nios V host (new)
+
+See [`quartus_a5e_nios/`](quartus_a5e_nios/) — Nios V/m + Avalon→APB bridge + Caliptra 1.x.
+Synthesis succeeded on A5EC065BB32AE6S: **~138.7K / 222.4K ALMs (62%)**.
