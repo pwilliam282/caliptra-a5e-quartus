@@ -32,3 +32,10 @@ Synthesis succeeded on A5EC065BB32AE6S: **~138.7K / 222.4K ALMs (62%)**.
 ## rtl/ (passive wrapper)
 
 `rtl/caliptra_passive_top.sv` is the thin Caliptra 1.x passive-mode wrapper referenced by the Quartus QSF as `../rtl/caliptra_passive_top.sv` (sibling of `quartus_a5e_nios/`). The full `caliptra-rtl/` tree is **not** in git: get it from release [rtl-20261101](https://github.com/pwilliam282/caliptra-a5e-quartus/releases/tag/rtl-20261101) or `git clone --branch v1.1 https://github.com/chipsalliance/caliptra-rtl.git` into `caliptra-rtl/` at the repo root.
+
+## quartus/syn_src/ (FPGA synthesis overrides)
+Referenced by the QSF as `../quartus/syn_src/*.sv`:
+- `caliptra_top_tb_pkg.sv` – tb_pkg variant without SystemVerilog classes (guarded for `SYNTHESIS`), fixes "caliptra_top_tb_pkg is not declared".
+- `caliptra_veer_sram_export.sv` – VeeR SRAM export wrapper.
+- `caliptra_sram.sv` – M20K-friendly SRAM model.
+Full caliptra-rtl is still from the rtl-20261101 release (or chipsalliance v1.1).
