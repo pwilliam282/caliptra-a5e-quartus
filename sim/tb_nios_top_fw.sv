@@ -50,7 +50,7 @@ module nios_caliptra_sys (
     magic_pio_export = 1; ctrl_pio_export = 1; repeat (20) @(posedge clk); ctrl_pio_export = 3;
     wait_st(0); magic_pio_export = 2;
     rd(18'h300d4, d); $display("[%0d] HW_REV_ID=%h", cyc, d);
-    wr(18'h30048, 1); wr(18'h3005c, 1); magic_pio_export = 3;
+    wr(18'h30048, 1); wr(18'h3005c, 1); wr(18'h30110, 32'd100_000_000); wr(18'h30114, 0);  // WDT_CFG (debug-locked ROM arms WDT1) magic_pio_export = 3;
     rd(18'h1f000, d); $display("[%0d] FUSE_CTRL ID=%h", cyc, d); if (d!=32'h46555345) $display("ERROR id");
     wr(18'h1f004, 1);
     do rd(18'h1f008, d); while (d[0] || !(d[1]|d[2]));

@@ -49,6 +49,9 @@
 #define CPTRA_TRNG_STATUS   0x300ACu   /* bit1 DATA_WR_DONE */
 #define CPTRA_FUSE_WR_DONE  0x300B0u
 #define CPTRA_HW_REV_ID     0x300D4u
+#define CPTRA_WDT_CFG0      0x30110u   /* ROM starts WDT1 with this timeout when debug_locked=1 */
+#define CPTRA_WDT_CFG1      0x30114u
+#define WDT_TIMEOUT_CYCLES  100000000u /* hw-model default is 40M; margin for slow APB host */
 #define CPTRA_FW_REV_ID0    0x300D8u
 #define CPTRA_FW_REV_ID1    0x300DCu
 #define HOST_PAUSER         0x00000001u  /* constant PAUSER driven by rtl/avmm_to_apb.sv */
@@ -135,6 +138,9 @@ int main(void)
     /* PAUSER=1 is not a default valid mailbox user: register + lock slot 0 (fuse phase only) */
     CPTRA(CPTRA_MBOX_VALID_PAUSER0) = HOST_PAUSER;
     CPTRA(CPTRA_MBOX_PAUSER_LOCK0)  = 1u;
+    /* production (debug locked): ROM arms WDT1 from CPTRA_WDT_CFG; 0 => 1 cycle => fatal NMI */
+    CPTRA(CPTRA_WDT_CFG0) = WDT_TIMEOUT_CYCLES;
+    CPTRA(CPTRA_WDT_CFG1) = 0u;
     magic(0x00000003u);
 
     /* 3. fuse controller IP pushes the full OTP image (83 FUSE_* words) + FUSE_WR_DONE */

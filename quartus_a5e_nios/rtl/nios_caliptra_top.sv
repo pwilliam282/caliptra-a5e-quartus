@@ -1,6 +1,6 @@
 // nios_caliptra_top.sv - Nios V/m host + Caliptra 1.x (passive) on Agilex 5 E (A5EC065BB32AE6S).
 // Nios data master -> PD mm_bridge (exported) -> avmm_to_apb -> Caliptra APB (constant PAUSER=1).
-// TEST KEY ONLY on cptra_obf_key. Pinout TBD (all non-clock I/O virtual for the compile study).
+// Straps DEVICE_PRODUCTION + debug locked; STUDY (non-secret) cptra_obf_key. Pinout TBD (all non-clock I/O virtual for the compile study).
 module nios_caliptra_top (
   input  logic       clk,        // single clock for Nios + Caliptra (e.g. 50-100 MHz board osc)
   input  logic       reset_n,    // board reset / push-button, active low
@@ -93,15 +93,16 @@ module nios_caliptra_top (
                       etrng_req, cptra_error_non_fatal, cptra_error_fatal, mailbox_flow_done,
                       mailbox_data_avail, ready_for_runtime, ready_for_fw_push, ready_for_fuses};
 
-  // Arbitrary TEST obfuscation key (placeholder strap) - NEVER use in production
-  localparam logic [255:0] TEST_OBF_KEY =
+  // FPGA production-MIMIC study obfuscation key: fixed arbitrary value, NOT a real product
+  // secret (real silicon gets cptra_obf_key from a protected/HSM-provisioned source).
+  localparam logic [255:0] STUDY_PROD_MIMIC_OBF_KEY =
     256'h31358e8a_f34d6a45_1c1b3b72_e5f5ffd6_d1bf4e16_cf1f2ce9_3dc4fd37_b2c3b8d5;
 
   caliptra_passive_top #(.ROM_INIT_FILE("../fw/caliptra-rom.hex")) u_caliptra (
     .clk, .cptra_pwrgood, .cptra_rst_b,
-    .cptra_obf_key(TEST_OBF_KEY),
-    .security_state_device_lifecycle(2'b00),   // DEVICE_UNPROVISIONED
-    .security_state_debug_locked(1'b0),
+    .cptra_obf_key(STUDY_PROD_MIMIC_OBF_KEY),
+    .security_state_device_lifecycle(2'b11),   // DEVICE_PRODUCTION (production-flow mimic)
+    .security_state_debug_locked(1'b1),        // debug locked
     .jtag_tck(1'b0), .jtag_tms(1'b0), .jtag_tdi(1'b0), .jtag_trst_n(1'b0),
     .jtag_tdo(), .jtag_tdoEn(),
     .PADDR, .PPROT, .PSEL, .PENABLE, .PWRITE, .PWDATA, .PAUSER, .PREADY, .PSLVERR, .PRDATA,
