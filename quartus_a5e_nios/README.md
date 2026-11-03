@@ -70,6 +70,6 @@ Quartus files: `nios_caliptra_a5e.qpf/.qsf` (paths relative: `../caliptra-rtl`, 
 ## Not done / blockers for "talk on hardware"
 - No board pinout / IO standards (clk, reset_n, led virtual-pin study only); no PLL.
 - Full fit not run here (16 GB host OOMs on Caliptra place&route; need ≥32 GB).
-- Caliptra ROM image not loaded (`ROM_INIT_FILE=""`): HW_REV_ID / FLOW_STATUS / fuses work from
-  the BootFSM without ROM, but going past `ready_for_fuses` needs the caliptra-sw 1.x ROM hex + fuse/FW flow.
+- Caliptra ROM image is loaded from `../fw/caliptra-rom.hex` (set via `.ROM_INIT_FILE` in
+  `rtl/nios_caliptra_top.sv`); going past `ready_for_fuses` still needs the fuse/FW flow from Nios.
 - No simulation testbench of the PD system yet (avmm_to_apb + Caliptra APB is simple; recommended next).

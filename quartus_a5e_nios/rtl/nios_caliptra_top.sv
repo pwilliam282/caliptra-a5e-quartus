@@ -57,7 +57,8 @@ module nios_caliptra_top (
   localparam logic [255:0] TEST_OBF_KEY =
     256'h31358e8a_f34d6a45_1c1b3b72_e5f5ffd6_d1bf4e16_cf1f2ce9_3dc4fd37_b2c3b8d5;
 
-  caliptra_passive_top u_caliptra (
+  // Caliptra 1.x bootROM (rom-1.1.1), path relative to quartus_a5e_nios/ compile dir
+  caliptra_passive_top #(.ROM_INIT_FILE("../fw/caliptra-rom.hex")) u_caliptra (
     .clk, .cptra_pwrgood, .cptra_rst_b,
     .cptra_obf_key(TEST_OBF_KEY),
     .security_state_device_lifecycle(2'b00),   // DEVICE_UNPROVISIONED

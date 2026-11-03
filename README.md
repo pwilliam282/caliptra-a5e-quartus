@@ -39,3 +39,9 @@ Referenced by the QSF as `../quartus/syn_src/*.sv`:
 - `caliptra_veer_sram_export.sv` – VeeR SRAM export wrapper.
 - `caliptra_sram.sv` – M20K-friendly SRAM model.
 Full caliptra-rtl is still from the rtl-20261101 release (or chipsalliance v1.1).
+
+## Caliptra bootROM (`fw/`)
+
+`fw/caliptra-rom.hex` is the Caliptra **1.x** bootROM (caliptra-sw rom-1.1.1, 6144 x 64-bit words, same image used in sim to reach `ready_for_runtime`); `fw/caliptra-rom.bin` + `fw/SHA256SUMS` for verification.
+`quartus_a5e_nios/rtl/nios_caliptra_top.sv` instantiates `caliptra_passive_top #(.ROM_INIT_FILE("../fw/caliptra-rom.hex"))`, which `$readmemh`s it into the Caliptra ROM M20K at synthesis (path is relative to `quartus_a5e_nios/`). The QSF also lists it as `HEX_FILE` for dependency tracking.
+**Do not use a Caliptra 2.x ROM** — it is incompatible with this 1.x RTL.
