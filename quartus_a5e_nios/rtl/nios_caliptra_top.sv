@@ -29,16 +29,57 @@ module nios_caliptra_top (
     .magic_pio_export             (magic_out)
   );
 
-  // ---- Avalon -> APB ----
+  logic ready_for_fuses, ready_for_fw_push, ready_for_runtime;
+  // ---- SoC window decode (18-bit, Nios base 0x0004_0000) ----
+  //   0x00000-0x1BFFF  soc_fw_store   FW bundle ROM (read-only, 112 KiB)
+  //   0x1F000-0x1FFFF  soc_fuse_ctrl  fuse controller MMIO
+  //   0x20000-0x3FFFF  Caliptra APB   (mbox_csr 0x20000, soc_ifc 0x30000) via avmm_to_apb
+  // Caliptra 1.x decodes only 0x2xxxx/0x3xxxx, so the low half is free for SoC IP.
+  logic sel_cptra, sel_fuse, sel_fw;
+  assign sel_cptra = cl_address[17];
+  assign sel_fuse  = !cl_address[17] && (cl_address[16:12] == 5'h1F);
+  assign sel_fw    = !cl_address[17] && !sel_fuse;
+  logic [31:0] br_readdata, fuse_rdata, fw_rdata;
+  logic br_readdatavalid, br_waitrequest;
+  logic loc_rv, loc_rv_fuse;
+  always_ff @(posedge clk or negedge reset_n)
+    if (!reset_n) begin loc_rv <= 1'b0; loc_rv_fuse <= 1'b0; end
+    else begin loc_rv <= cl_read && !sel_cptra; loc_rv_fuse <= sel_fuse; end
+  assign cl_waitrequest   = sel_cptra ? br_waitrequest : 1'b0;   // local slaves: zero wait
+  assign cl_readdatavalid = br_readdatavalid | loc_rv;
+  assign cl_readdata      = loc_rv ? (loc_rv_fuse ? fuse_rdata : fw_rdata) : br_readdata;
+
+  soc_fw_store #(.DEPTH(28672), .FW_INIT_FILE("../fw/caliptra-fw-bundle.hex")) u_fw_store (
+    .clk, .rd(cl_read && sel_fw), .waddr(cl_address[16:2] < 15'd28672 ? cl_address[16:2] : 15'd0),
+    .rdata(fw_rdata));
+
+  // ---- Avalon -> APB (Nios path) + fuse controller APB path, muxed ----
   logic [31:0] PADDR, PWDATA, PAUSER, PRDATA; logic [2:0] PPROT;
   logic PSEL, PENABLE, PWRITE, PREADY, PSLVERR;
+  logic [31:0] n_PADDR, n_PWDATA, f_PADDR, f_PWDATA;
+  logic n_PSEL, n_PENABLE, n_PWRITE, f_PSEL, f_PENABLE, f_PWRITE, fuse_busy;
   avmm_to_apb #(.AW(18), .PAUSER_VAL(32'h1)) u_bridge (
     .clk, .rst_n(reset_n),
-    .avs_address(cl_address), .avs_read(cl_read), .avs_write(cl_write),
+    .avs_address(cl_address), .avs_read(cl_read && sel_cptra), .avs_write(cl_write && sel_cptra),
     .avs_writedata(cl_writedata), .avs_byteenable(cl_byteenable),
-    .avs_readdata(cl_readdata), .avs_readdatavalid(cl_readdatavalid),
-    .avs_waitrequest(cl_waitrequest), .avs_response(cl_response),
-    .PADDR, .PPROT, .PSEL, .PENABLE, .PWRITE, .PWDATA, .PAUSER, .PREADY, .PSLVERR, .PRDATA);
+    .avs_readdata(br_readdata), .avs_readdatavalid(br_readdatavalid),
+    .avs_waitrequest(br_waitrequest), .avs_response(cl_response),
+    .PADDR(n_PADDR), .PPROT, .PSEL(n_PSEL), .PENABLE(n_PENABLE), .PWRITE(n_PWRITE),
+    .PWDATA(n_PWDATA), .PAUSER, .PREADY, .PSLVERR, .PRDATA);
+
+  soc_fuse_ctrl #(.FUSE_IMAGE_FILE("../fw/fuse_image.hex"), .FW_BYTES(32'd109000)) u_fuse_ctrl (
+    .clk, .rst_n(reset_n), .ready_for_fuses,
+    .mmio_read(cl_read && sel_fuse), .mmio_write(cl_write && sel_fuse),
+    .mmio_addr(cl_address[11:0]), .mmio_wdata(cl_writedata), .mmio_rdata(fuse_rdata),
+    .busy(fuse_busy), .PADDR(f_PADDR), .PWDATA(f_PWDATA),
+    .PSEL(f_PSEL), .PENABLE(f_PENABLE), .PWRITE(f_PWRITE), .PREADY, .PSLVERR);
+
+  // Fuse controller owns APB while pushing fuses (Nios only polls fuse_ctrl STATUS meanwhile).
+  assign PADDR   = fuse_busy ? f_PADDR   : n_PADDR;
+  assign PWDATA  = fuse_busy ? f_PWDATA  : n_PWDATA;
+  assign PSEL    = fuse_busy ? f_PSEL    : n_PSEL;
+  assign PENABLE = fuse_busy ? f_PENABLE : n_PENABLE;
+  assign PWRITE  = fuse_busy ? f_PWRITE  : n_PWRITE;
 
   // ---- Host controls (ctrl PIO, reset value 0 => Caliptra held in reset) ----
   // ctrl[0] cptra_pwrgood, ctrl[1] cptra_rst_b, ctrl[2] BootFSM_BrkPoint
@@ -46,7 +87,6 @@ module nios_caliptra_top (
   assign cptra_pwrgood = ctrl_out[0] & reset_n;
   assign cptra_rst_b   = ctrl_out[1] & reset_n;
 
-  logic ready_for_fuses, ready_for_fw_push, ready_for_runtime;
   logic mailbox_data_avail, mailbox_flow_done, cptra_error_fatal, cptra_error_non_fatal, etrng_req;
   logic [63:0] generic_output_wires;
   assign status_in = {generic_output_wires[23:0],
@@ -57,7 +97,6 @@ module nios_caliptra_top (
   localparam logic [255:0] TEST_OBF_KEY =
     256'h31358e8a_f34d6a45_1c1b3b72_e5f5ffd6_d1bf4e16_cf1f2ce9_3dc4fd37_b2c3b8d5;
 
-  // Caliptra 1.x bootROM (rom-1.1.1), path relative to quartus_a5e_nios/ compile dir
   caliptra_passive_top #(.ROM_INIT_FILE("../fw/caliptra-rom.hex")) u_caliptra (
     .clk, .cptra_pwrgood, .cptra_rst_b,
     .cptra_obf_key(TEST_OBF_KEY),

@@ -1,2 +1,3 @@
-1a8866706e2c881d7e23de1c37fccdc315fbe7c51957311e3dc1fe7276a86a1e  caliptra-rom.hex
+fd8db6b5c669067eb094e8963e10a943ca2cc36a8a76406555dc74e805dd0ae6  caliptra-fw-bundle.bin
 4e6893db1d83e22c45c8b85449d618ceeaf89812fbdfd11eaa52df686f98edd7  caliptra-rom.bin
+78b08ce15b7e7410721b9b7d0f37e17de79ddd7cae3821800dcd168286e7248e  fuse_image.hex
